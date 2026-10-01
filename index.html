@@ -296,6 +296,96 @@ Raise awareness about the importance of equality for national progress.
 
     </div>
 </section>
+<section id="game" data-aos="fade-up">
+    <h2 style="color:#ffd700; text-align:center;">Interactive Game: Test Your Knowledge</h2>
+    <p style="text-align:center;">Answer the questions and see how much you know about inequality.</p>
+
+    <div id="quiz-container" style="background:#222; padding:30px; border-radius:10px; max-width:700px; margin:auto; color:#fff;">
+        
+        <div id="question"></div>
+        <div id="options"></div>
+
+        <button id="nextBtn" style="margin-top:20px; padding:10px 20px; background:#ffd700; border:none; border-radius:5px; cursor:pointer; font-size:18px;">
+            Next Question
+        </button>
+
+        <div id="result" style="margin-top:20px; font-size:22px; text-align:center; color:#ffd700;"></div>
+    </div>
+</section>
+
+<script>
+const quizData = [
+    {
+        question: "What is inequality?",
+        options: ["Unequal access to opportunities", "A type of food", "A holiday", "A sport"],
+        answer: 0
+    },
+    {
+        question: "Which country is known for having high inequality?",
+        options: ["Brazil", "Japan", "Norway", "Canada"],
+        answer: 0
+    },
+    {
+        question: "What helps reduce inequality?",
+        options: ["Education and opportunities", "Ignoring the problem", "Removing schools", "Less community support"],
+        answer: 0
+    },
+    {
+        question: "What is a common effect of inequality?",
+        options: ["Limited access to services", "Everyone becomes rich", "Cities disappear", "People stop working"],
+        answer: 0
+    }
+];
+
+let currentQuestion = 0;
+let score = 0;
+
+function loadQuestion() {
+    const q = quizData[currentQuestion];
+    document.getElementById("question").innerHTML = `<h3>${q.question}</h3>`;
+    
+    const optionsDiv = document.getElementById("options");
+    optionsDiv.innerHTML = "";
+
+    q.options.forEach((option, index) => {
+        const btn = document.createElement("button");
+        btn.innerHTML = option;
+        btn.style = "display:block; width:100%; margin:10px 0; padding:10px; background:#333; color:#fff; border:none; border-radius:5px; cursor:pointer; font-size:18px;";
+        btn.onclick = () => checkAnswer(index);
+        optionsDiv.appendChild(btn);
+    });
+}
+
+function checkAnswer(selected) {
+    if (selected === quizData[currentQuestion].answer) {
+        score++;
+    }
+    currentQuestion++;
+
+    if (currentQuestion < quizData.length) {
+        loadQuestion();
+    } else {
+        document.getElementById("quiz-container").innerHTML = `
+            <h2 style="color:#ffd700; text-align:center;">Your Score: ${score}/${quizData.length}</h2>
+            <p style="text-align:center;">Thank you for playing!</p>
+        `;
+    }
+}
+
+document.getElementById("nextBtn").onclick = () => {
+    currentQuestion++;
+    if (currentQuestion < quizData.length) {
+        loadQuestion();
+    } else {
+        document.getElementById("quiz-container").innerHTML = `
+            <h2 style="color:#ffd700; text-align:center;">Your Score: ${score}/${quizData.length}</h2>
+            <p style="text-align:center;">Thank you for playing!</p>
+        `;
+    }
+};
+
+loadQuestion();
+</script>
 
 <section id="video" data-aos="fade-up">
     <h2>Project Video</h2>
@@ -306,99 +396,6 @@ Raise awareness about the importance of equality for national progress.
             Your browser does not support video playback.
         </video>
     </div>
-</section><section id="quiz" data-aos="fade-up">
-    <h2>Parent Quiz — Test Your Knowledge</h2>
-    <p style="text-align:center;">
-        Answer the 6 questions below. At the end, your score will appear. The parent with the highest score wins a prize!
-    </p>
 
-    <form id="quizForm" style="font-size:18px; line-height:1.8;">
-
-        <!-- QUESTION 1 -->
-        <p><strong>1. What is one major cause of inequality in Brazil?</strong></p>
-        <label><input type="radio" name="q1" value="correct"> Lack of access to quality education</label><br>
-        <label><input type="radio" name="q1" value="wrong"> Too many job opportunities</label><br>
-        <label><input type="radio" name="q1" value="wrong"> Excessive government support</label><br><br>
-
-        <!-- QUESTION 2 -->
-        <p><strong>2. What challenge do many young people in favelas face?</strong></p>
-        <label><input type="radio" name="q2" value="correct"> Violence and unstable living conditions</label><br>
-        <label><input type="radio" name="q2" value="wrong"> Free access to private schools</label><br>
-        <label><input type="radio" name="q2" value="wrong"> Unlimited job offers</label><br><br>
-
-        <!-- QUESTION 3 -->
-        <p><strong>3. What does technical education provide?</strong></p>
-        <label><input type="radio" name="q3" value="correct"> Practical skills for real jobs</label><br>
-        <label><input type="radio" name="q3" value="wrong"> Only sports training</label><br>
-        <label><input type="radio" name="q3" value="wrong"> Free vacations</label><br><br>
-
-        <!-- QUESTION 4 -->
-        <p><strong>4. What is one benefit of technical education?</strong></p>
-        <label><input type="radio" name="q4" value="correct"> Better income and stable employment</label><br>
-        <label><input type="radio" name="q4" value="wrong"> More video game time</label><br>
-        <label><input type="radio" name="q4" value="wrong"> Less responsibility</label><br><br>
-
-        <!-- QUESTION 5 -->
-        <p><strong>5. What is a goal of the proposed solution?</strong></p>
-        <label><input type="radio" name="q5" value="correct"> Reduce poverty in vulnerable communities</label><br>
-        <label><input type="radio" name="q5" value="wrong"> Increase inequality</label><br>
-        <label><input type="radio" name="q5" value="wrong"> Remove all schools</label><br><br>
-
-        <!-- QUESTION 6 -->
-        <p><strong>6. Why does technical education help break the cycle of poverty?</strong></p>
-        <label><input type="radio" name="q6" value="correct"> It creates real job opportunities</label><br>
-        <label><input type="radio" name="q6" value="wrong"> It reduces motivation</label><br>
-        <label><input type="radio" name="q6" value="wrong"> It eliminates all responsibilities</label><br><br>
-
-        <button type="button" onclick="calculateScore()" 
-            style="padding:15px 25px; background:#ffd700; border:none; border-radius:10px; font-size:18px; cursor:pointer;">
-            Submit Answers
-        </button>
-    </form>
-
-    <div id="quizResult" style="margin-top:30px; text-align:center; font-size:22px; color:#ffd700;"></div>
-</section>
-
-<script>
-function calculateScore() {
-    let score = 0;
-    const form = document.getElementById("quizForm");
-
-    for (let i = 1; i <= 6; i++) {
-        const answer = form["q" + i].value;
-        if (answer === "correct") score++;
-    }
-
-    let message = "";
-
-    if (score === 6) {
-        message = "Perfect score! 6/6 — Amazing! You truly understand the topic.";
-    } else if (score >= 4) {
-        message = "Great job! You scored " + score + "/6.";
-    } else if (score >= 2) {
-        message = "You scored " + score + "/6. Good effort!";
-    } else {
-        message = "You scored " + score + "/6. Keep learning!";
-    }
-
-    document.getElementById("quizResult").innerHTML = message;
-}
-</script>
-
-
-<footer>
-    <p>School Project — Reducing Inequality</p>
-</footer>
-
-<!-- AOS SCRIPT -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-<script>
-    AOS.init();
-</script>
-
-</body>
-</html>
-
-</html>
 
 <!--                  -->
